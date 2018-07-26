@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 class BlogArticle(models.Model):
     title = models.CharField(max_length=300)
-    author = models.ForeignKey(User, related_name="blog_posts")
+    author = models.ForeignKey(User, related_name="blog_posts", on_delete=models.DO_NOTHING)
     body = models.TextField(unique=True)
     publish = models.DateField(default=timezone.now)
 
