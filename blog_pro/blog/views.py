@@ -15,5 +15,5 @@ def blog_content_view(request):
     if not blog_id:
         return
     blog = get_object_or_404(BlogArticle.objects.filter(id=blog_id))
-    return render(request, "index.html", {"blog_content": blog.body})
+    return render(request, "blog.html", {"blog_title": blog.title, "blog_content": blog.body})
     # return HttpResponse(blog.body)
