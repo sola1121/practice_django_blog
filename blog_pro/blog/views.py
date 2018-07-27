@@ -10,5 +10,5 @@ def index_view(request):
 
 
 def blog_content_view(request, blog_id):
-    blog = get_object_or_404(BlogArticle.objects.filter(id=blog_id))
+    blog = get_object_or_404(BlogArticle, id=blog_id)
     return render(request, "blog.html", {"blog_title": blog.title, "blog_content": blog.body})

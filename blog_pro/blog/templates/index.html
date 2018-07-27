@@ -7,7 +7,7 @@
 {% block html_body %}
     {% for blog in blogs %}
     <div class="blog">
-        <a href="/blog/{{ blog.id }}"><h4>{{ blog.title }}</h4></a>
+        <a href="/blog/{{ blog.id }}" target="_blank"<h4>{{ blog.title }}</h4></a>
         <i>{{ blog.author }} &nbsp;&nbsp;&nbsp; {{ blog.publish }}</i>
     </div>
     {% endfor %}
