@@ -1,0 +1,12 @@
+body{
+    width: 50%;
+    margin: auto;
+}
+
+a, a:link , a:visited {
+    color: cadetblue;
+}
+
+.blog{
+    border: 1px solid black;
+}

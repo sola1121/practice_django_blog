@@ -1,15 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>博客首页</title>
-</head>
-<body>
+{% extends "basement.html" %}
+{% load staticfiles %}
+
+{% block html_title %} 博客首页 {% endblock %}
+{% block html_style_link %}{% static  "CSS/index.css" %}{% endblock %}
+
+{% block html_body %}
     {% for blog in blogs %}
-        <h3>{{ blog.title }}</h3>
-        <div><i>{{ blog.author }} &nbsp;&nbsp;&nbsp; {{ blog.publish }}</i></div>
-        <p>{{ blog.body }}</p>
-        <br>
+    <div class="blog">
+        <a href="/blog?log_id={{blog.id }}" target="_blank" onclick="loadXMLDoc()"><h4>{{ blog.title }}</h4></a>
+        <i>{{ blog.author }} &nbsp;&nbsp;&nbsp; {{ blog.publish }}</i>
+        <div id="blog_{{blog_id}}"></div>
+    </div>
     {% endfor %}
-</body>
-</html>
+{% endblock %}
+
+{% block html_script_src %}{% static "JS/index.js"%}{% endblock %}
