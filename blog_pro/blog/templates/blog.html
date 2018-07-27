@@ -2,7 +2,8 @@
 {% load static %}
 
 {% block html_title %}{{ blog_title }}{% endblock %}
+{% block html_style_link %}{% endblock %}
 
 {% block html_body %}
-    {{ blog_content }}
+    <div class="blog">{{ blog_content }}</div>
 {% endblock %}

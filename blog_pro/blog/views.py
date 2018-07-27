@@ -9,11 +9,6 @@ def index_view(request):
     return render(request, "index.html", {"blogs": blogs})
 
 
-def blog_content_view(request):
-    if request.method == "GET":
-        blog_id = request.GET.get("log_id", None)
-    if not blog_id:
-        return
+def blog_content_view(request, blog_id):
     blog = get_object_or_404(BlogArticle.objects.filter(id=blog_id))
     return render(request, "blog.html", {"blog_title": blog.title, "blog_content": blog.body})
-    # return HttpResponse(blog.body)

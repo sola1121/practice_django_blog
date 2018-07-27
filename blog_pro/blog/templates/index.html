@@ -7,11 +7,8 @@
 {% block html_body %}
     {% for blog in blogs %}
     <div class="blog">
-        <a href="/blog?log_id={{blog.id }}" target="_blank" onclick="loadXMLDoc()"><h4>{{ blog.title }}</h4></a>
+        <a href="/blog/{{ blog.id }}"><h4>{{ blog.title }}</h4></a>
         <i>{{ blog.author }} &nbsp;&nbsp;&nbsp; {{ blog.publish }}</i>
-        <div id="blog_{{blog_id}}"></div>
     </div>
     {% endfor %}
 {% endblock %}
-
-{% block html_script_src %}{% static "JS/index.js"%}{% endblock %}
