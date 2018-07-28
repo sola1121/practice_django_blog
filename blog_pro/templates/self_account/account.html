@@ -1,0 +1,23 @@
+{% extends "basement.html" %}
+{% load static %}
+
+{% block html_title %}login us{% endblock %}
+
+{% block html_style_link %}
+    {% static "CSS/account.css" %}
+{% endblock %}
+
+{% block html_body %}
+    <h3>Login us</h3>
+    <form action="/account/login" method="post">
+        {% csrf_token %}
+        {{ form_obj.as_p }}
+
+        {% comment "使用手动的方式创建表单控件内容" %}
+            {% for field in form_obj %}
+                <p>{{ field.label }}: {{ field }}</p>
+            {% endfor %}
+        {% endcomment %}
+    </form>
+    <a href="http://www.bootcss.com/">一个资源网站</a>
+{% endblock %}
