@@ -25,7 +25,7 @@ SECRET_KEY = '0z2wg*cepe%tb#ywo!p%*6_32ohnm46dtqcrq55tz--&^4%$rd'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -57,8 +57,8 @@ ROOT_URLCONF = 'blog_pro.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [os.path.join(BASE_DIR, "templates")],   # 自定义模板位置
+        'APP_DIRS': False,   # 关闭以默认方式查找模板
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -122,6 +122,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIR = [
-    (os.path.join(BASE_DIR, "static")).replace("\\", "/"),
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
 ]
+
+
+if __name__ == "__main__":
+    # 查看是否配置正确
+    print("STATICFILES_DIR:", STATICFILES_DIRS[0])
+    print("TEMPLATES:", TEMPLATES[0]["DIRS"])
