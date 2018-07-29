@@ -1,0 +1,20 @@
+{% extends "basement.html" %}
+
+{% comment "提供django内置登录的模板" %}
+    在account使用了Django内置的登录, url(r"login$", django.contrib.auth.views.login, name="login")
+    翻看源码知道其使用的默认模板位置在registration/login.html
+    本文件就是提供了django内置登录的模板
+{% endcomment %}
+
+{% load static %}
+
+{% block html_title %}login us{% endblock %}
+
+{% block html_body %}
+<h3>Login us</h3>
+<form action="{% url "account:login" %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="login in">
+</form>
+{% endblock %}

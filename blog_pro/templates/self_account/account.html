@@ -12,6 +12,7 @@
     <form action="/account/login" method="post">
         {% csrf_token %}
         {{ form_obj.as_p }}
+        <input type="submit" value="login in">
 
         {% comment "使用手动的方式创建表单控件内容" %}
             {% for field in form_obj %}
