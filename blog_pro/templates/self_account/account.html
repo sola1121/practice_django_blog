@@ -12,6 +12,10 @@
     <form action="/account/login" method="post">
         {% csrf_token %}
         {{ form_obj.as_p }}
+        {% if form_obj is None %}
+            {{ form.as_p }}
+        {% endif %}
+
         <input type="submit" value="login in">
 
         {% comment "使用手动的方式创建表单控件内容" %}

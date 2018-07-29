@@ -12,9 +12,9 @@
 
 {% block html_body %}
 <h3>Login us</h3>
-<form action="{% url "account:login" %}" method="post">
+<form action="{% url "account:dj-login1" %}" method="post">
     {% csrf_token %}
-    {{ form }}
+    {{ form.as_p }}
     <input type="submit" value="login in">
 </form>
 {% endblock %}

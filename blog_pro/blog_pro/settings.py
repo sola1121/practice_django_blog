@@ -128,6 +128,10 @@ STATICFILES_DIRS = [
 ]
 
 
+# 为内置的login方法配置登录重定向位置 
+LOGIN_REDIRECT_URL = "/index"
+
+
 if __name__ == "__main__":
     # 查看是否配置正确
     print("STATICFILES_DIR:", STATICFILES_DIRS[0])
