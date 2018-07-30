@@ -31,3 +31,16 @@ Persist a user id and a backend in the request. This way a user doesn't have to 
 每次调用模板, 都会向模板发送一个request参数, 使用的render或其他方法传递.  
 这个参数中记录了详尽的请求信息, 需要可以直接使用.
 如, 使用django.contrib.auth.__init__中的login, 其就将验证后的用户直接放在了每次的request中.
+
+## 使用内置的登出
+
+### django.contib.auth.views.logout函数
+
+    logout(request, next_page=None,
+           template_name='registration/logged_out.html',
+           redirect_field_name=REDIRECT_FIELD_NAME,
+           extra_context=None)
+
+默认使用的登出后重定向为registration/logged_out.html, 这是admin管理界面的, 当然, login那个模板也是用的admin的.  
+可以在参数中更改其重定向的模板.
+

@@ -1,0 +1,9 @@
+{% extends "basement.html" %}
+
+{% block html_title %}Logout{% endblock %}
+
+{% block html_body %}
+    <p>You have logouted.</p>
+    <p>You can <a href="{% url "account:login" %}">login</a> again, or return to <a href="{% url "blog:index_blog" %}">blog</a>.</p>
+
+{% endblock %}

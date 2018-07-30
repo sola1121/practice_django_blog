@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 
-from .form import LoginForm
+from .forms import LoginForm, RegistrationForm
 
 
 # Create your views here.
@@ -23,3 +23,8 @@ def login_view(request):
     if request.method == "GET":
         login_form = LoginForm()
         return render(request, "self_account/account.html", {"form_obj": login_form})
+
+
+def register_view(request):
+    pass
+    #TODO: 完善登录的视图逻辑.
