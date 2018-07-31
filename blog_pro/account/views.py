@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 
-from .forms import LoginForm, RegistrationForm
+from .forms import LoginForm, RegistrationForm, UserProfileForm
 
 
 # Create your views here.
@@ -26,5 +26,38 @@ def login_view(request):
 
 
 def register_view(request):
-    pass
-    #TODO: 完善登录的视图逻辑.
+    if request.method == "POST":
+        user_form = RegistrationForm(request.POST)
+        if user_form.is_valid():
+            new_user = user_form.save(commit=False)                    # 调用ModelForm对象的save方法, 将直接把内容提交至数据库, 这里设置为False
+            new_user.set_password(user_form.cleaned_data["password"])  # 设置了对象密码(未检验的)
+            new_user.save()                                            # 在次保存, 这下将数据保存至数据库了.
+            return HttpResponse("regist successfully.")
+        else:
+            return HttpResponse("regist fialed.")
+    if request.method == "GET":
+        user_form = RegistrationForm()
+        return render(request, "self_account/register.html", {"form": user_form})   # 用Get方式请求, 则将注册页面返回, 注意form的传递
+
+
+def register_view2(request):
+    if request.method == "POST":
+        user_form = RegistrationForm(request.POST)
+        userprofile_form = UserProfileForm(request.POST)
+        if user_form.is_valid() * userprofile_form.is_valid():
+        # 对User填入数据
+            new_user = user_form.save(commit=False)                    
+            new_user.set_password(user_form.cleaned_data["password"])
+            new_user.save()
+        # 对userprofile填入数据
+            new_profile = userprofile_form.save(commit=False)
+            new_profile.user = new_user
+            new_profile.save()
+            return HttpResponse("regist successfully.")
+        else:
+            return HttpResponse("regist fialed.")
+    if request.method == "GET":
+        user_form = RegistrationForm()
+        userprofile_form = UserProfileForm()
+        return render(request, "self_account/register.html", {"form": user_form, "profile": userprofile_form})   # 用Get方式请求, 则将注册页面返回, 注意form的传递
+    

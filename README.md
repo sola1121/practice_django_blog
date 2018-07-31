@@ -26,6 +26,10 @@ redirect_field_name是登录后重定向的位置, 可以在settings.py中添加
 Persist a user id and a backend in the request. This way a user doesn't have to reauthenticate on every request. Note that data set during the anonymous session is retained when the user logs in.  
 保留一个用户id和一个后端(session)在request中. 这样一个用户的每次request将不用重新鉴别. 注意在匿名session登录期间数据集任然保留.
 
+### 使用authenticate方法验证用户
+
+只限于用来验证User数据表中的相应用户字段, 有则返回相关对象, 无则返回None.
+
 ## 模板接收的参数
 
 每次调用模板, 都会向模板发送一个request参数, 使用的render或其他方法传递.  
@@ -42,5 +46,14 @@ Persist a user id and a backend in the request. This way a user doesn't have to 
            extra_context=None)
 
 默认使用的登出后重定向为registration/logged_out.html, 这是admin管理界面的, 当然, login那个模板也是用的admin的.  
-可以在参数中更改其重定向的模板.
+如同django.contrib.auth.views.login一样, logout也可以在参数中更改其重定向的模板.
+返回的是一个LogoutView对象.
 
+## 注册使用ModelForm类
+
+注册针对用户可能有多种要求, 所以django中没有内置的注册方法.  
+这是一个可以直接和数据表关联的表单对象, 通过在Meta类中的model参数中设置关联的数据库对象, 在fields中设置使用的数据表字段.
+
+### 拓展django.contrib.auth.models.User内置数据库表
+
+    添加一个一对一的外键表, 关联后就可以, 新增一些字段.

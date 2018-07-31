@@ -17,4 +17,7 @@ urlpatterns = [
 
     # logout相关
     url(r"^dj-logout$", auth_views.logout, {"template_name": "self_account/logout.html"}, name="dj-logout"),   # 自定义template所在位置
+
+    # register相关
+    url(r"^register", views.register_view2, name="register")
 ]
