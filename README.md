@@ -49,6 +49,13 @@ Persist a user id and a backend in the request. This way a user doesn't have to 
 如同django.contrib.auth.views.login一样, logout也可以在参数中更改其重定向的模板.
 返回的是一个LogoutView对象.
 
+### django.contrib.auth.__init__中的logout函数
+
+    logout(request)
+
+Remove the authenticated user's ID from the request and flush their session data.  
+从request中移除已经验证的用户id,并刷新他们的session数据.
+
 ## 注册使用ModelForm类
 
 注册针对用户可能有多种要求, 所以django中没有内置的注册方法.  
@@ -56,4 +63,8 @@ Persist a user id and a backend in the request. This way a user doesn't have to 
 
 ### 拓展django.contrib.auth.models.User内置数据库表
 
-    添加一个一对一的外键表, 关联后就可以, 新增一些字段.
+    添加一个一对一的OneToOneField外键表, 关联后就可以, 新增一些字段.
+
+## 修改密码
+
+django有内置的修改密码相关的方法, 可以拿来直接用.

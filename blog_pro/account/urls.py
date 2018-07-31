@@ -19,5 +19,8 @@ urlpatterns = [
     url(r"^dj-logout$", auth_views.logout, {"template_name": "self_account/logout.html"}, name="dj-logout"),   # 自定义template所在位置
 
     # register相关
-    url(r"^register", views.register_view2, name="register")
+    url(r"^register", views.register_view2, name="register"),
+
+    # 修改密码 TODO: 未完成
+    url(r"^change-pass", auth_views.password_change, {"template_name": "registration/password_change_form.html"}),
 ]

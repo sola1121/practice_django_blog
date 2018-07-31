@@ -22,8 +22,8 @@ class RegistrationForm(forms.ModelForm):                                       #
             raise forms.ValidationError("Password don't match.")
         return cd["password2"]
 
+
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ("phone", "birth")
-

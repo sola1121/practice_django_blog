@@ -44,7 +44,9 @@ def register_view2(request):
     if request.method == "POST":
         user_form = RegistrationForm(request.POST)
         userprofile_form = UserProfileForm(request.POST)
+
         if user_form.is_valid() * userprofile_form.is_valid():
+            print("所获得的有效数据", user_form.cleaned_data, userprofile_form.cleaned_data)
         # 对User填入数据
             new_user = user_form.save(commit=False)                    
             new_user.set_password(user_form.cleaned_data["password"])
@@ -60,4 +62,3 @@ def register_view2(request):
         user_form = RegistrationForm()
         userprofile_form = UserProfileForm()
         return render(request, "self_account/register.html", {"form": user_form, "profile": userprofile_form})   # 用Get方式请求, 则将注册页面返回, 注意form的传递
-    
