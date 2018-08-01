@@ -4,6 +4,7 @@
 <span><a href="{% url "blog:index_blog" %}">首页</a></span>
 {% if request.user.is_authenticated %}
     <span style="float: right;"><a href="{% url "account:dj-logout" %}">Logout</a></span>
+    <span style="float: right; margin-right: 2em;"><a href="{% url "account:change-pass" %}">Change</a></span>
     <span style="float: right; margin-right: 2em;"><a href="#">{{ request.user.username }}</a></span>
 {% else %}
     <span style="float:right; margin-left: 2em;"><a href="{% url "account:register" %}">注册</a></span>
@@ -12,7 +13,7 @@
 
     {% comment "request 传参"%}
         每一次调用模板, 都会向其中传递一个request参数, 这是用render 等方法明确传递过来的.
-        request中记录了很多请求信息, 可以直接使用.
+        request中记录了很多请求信息, 可以直接使用, 这里就使用了用户信息.
     {% endcomment %}
 
 </div>

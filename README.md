@@ -2,6 +2,8 @@
 
 1. 实现了从首页浏览所有已发博客的信息.
 2. 实现了用户的登录注册功能.
+3. 用户可以更改自己的密码.
+4. 用户忘记密码可以通过其他注册练习信息重置密码.
 
 # 知识点记录
 
@@ -67,4 +69,61 @@ Remove the authenticated user's ID from the request and flush their session data
 
 ## 修改密码
 
-django有内置的修改密码相关的方法, 可以拿来直接用.
+django有内置的修改密码相关的方法, 可以拿来直接用.  
+在django.contrib.auth.views中, 有password_change, password_change_done两个与密码修改相关的函数.
+
+    password_change(request,
+                    template_name='registration/password_change_form.html',
+                    post_change_redirect=None,
+                    password_change_form=PasswordChangeForm,
+                    extra_context=None)
+
+可见password_change使用的模板是registration/password_change_form.html, 使用的ModelForm表单设计PassWordChangeForm
+其向模板中传入`context={'form': form, 'title': _('Password change')}`  
+
+    def password_change_done(request,
+                         template_name='registration/password_change_done.html',
+                         extra_context=None)
+
+password_change_done是当更改完成后系统应该调用的方法, 主要用于提示用户.  
+在extra_context中可以添加额外的内容到context中.
+
+**注意**: post_change_redirect, 这是重定向到password_change_done的配置参数, 使用了django.urls.base中的reverse相关方法
+reverse方法用于将给定的 _namespace: name_ 形式的字符串转换为url地址, 如果配置未成功, 会造成如下错误
+
+    Reverse for 'password_change_done' not found.
+
+## 重置密码, 用于用户忘记密码的时候
+
+在django.contrib.auth.views中提供了一个密码重置的解决方案, 使用password_reset的一系列函数, 通过邮件来重置密码.
+>向用户发送邮件 -> 显示发送是否成功      -> 使用邮箱中的url重置密码 -> 如果成功,显示成功信息
+>password_reset-> password_reset_done -> password_reset_confirm-> password_reset_complete
+
+    password_reset(request,
+                   template_name='registration/password_reset_form.html',
+                   email_template_name='registration/password_reset_email.html',
+                   subject_template_name='registration/password_reset_subject.txt',
+                   password_reset_form=PasswordResetForm,
+                   token_generator=default_token_generator,
+                   post_reset_redirect=None,
+                   from_email=None,
+                   extra_context=None,
+                   html_email_template_name=None,
+                   extra_email_context=None)
+
+template_name是发送邮件的表单模板.
+
+    password_reset_done(request,
+                        template_name='registration/password_reset_done.html',
+                        extra_context=None)
+
+    password_reset_confirm(request, uidb64=None, token=None,
+                           template_name='registration/password_reset_confirm.html',
+                           token_generator=default_token_generator,
+                           set_password_form=SetPasswordForm,
+                           post_reset_redirect=None,
+                           extra_context=None)
+    
+    password_reset_complete(request,
+                            template_name='registration/password_reset_complete.html',
+                            extra_context=None)

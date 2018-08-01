@@ -19,8 +19,15 @@ urlpatterns = [
     url(r"^dj-logout$", auth_views.logout, {"template_name": "self_account/logout.html"}, name="dj-logout"),   # 自定义template所在位置
 
     # register相关
-    url(r"^register", views.register_view2, name="register"),
+    url(r"^register$", views.register_view2, name="register"),
 
-    # 修改密码 TODO: 未完成
-    url(r"^change-pass", auth_views.password_change, {"template_name": "registration/password_change_form.html"}),
+    # 修改密码
+    # 这里如果指定的话, 会使用默认的template_name, 为registration/password_change_...
+    url(r"^change-pass$", auth_views.password_change, 
+                        {"template_name": "self_account/password_change_form.html",
+                         "post_change_redirect": "/account/change-pass-done"},   # 解决 Reverse for 'password_change_done' not found
+                        name="change-pass"),
+    url(r"^change-pass-done$", auth_views.password_change_done, 
+                            {"template_name": "self_account/password_change_done.html"}, 
+                            name="change-pass-done"),
 ]
