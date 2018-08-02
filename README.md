@@ -116,9 +116,9 @@ reverse方法用于将给定的 _namespace: name_ 形式的字符串转换为url
                    html_email_template_name=None,
                    extra_email_context=None)
 
-template_name是发送邮件的表单模板, 使用password_reset_form.html模板.
-email_template_name发送给用户的邮件内容所在模板. 一般其中有一条向password_reset_confirm模板请求的连接. 这是邮件内容的模板.password_reset_email.html
-向模板中传递`context = {'form': form, 'title': _('Password reset')`, form是在django.contrib.auth.form中的 PasswordResetForm(forms.Form)对象, 只有一个forms.EmailField字段
+template_name是发送邮件的表单模板, 使用password_reset_form.html模板.  
+email_template_name发送给用户的邮件内容所在模板. 一般其中有一条向password_reset_confirm模板请求的连接. 这是邮件内容的模板.password_reset_email.html  
+向模板中传递`context = {'form': form, 'title': _('Password reset')`, form是在django.contrib.auth.form中的 PasswordResetForm(forms.Form)对象, 只有一个forms.EmailField字段  
 subject_template_name描述路径的文件中的内容将是所发邮件的主题.
 post_reset_redirect指明跳转目标.
 
@@ -187,3 +187,9 @@ token是在连接中由password_reset中的token_generator=default_token_generat
     EMAIL_USE_TLS = True                      # 这里必须是 True，否则发送不成功
     # 收件人看到的发件人, 必须是一直且有效的
     EMAIL_FROM = 'Tencent<3342076252@qq.com>'
+
+### 使用第三方库重置密码
+
+sudo pip install django-password-reset
+
+
