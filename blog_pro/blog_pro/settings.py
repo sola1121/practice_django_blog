@@ -132,6 +132,20 @@ STATICFILES_DIRS = [
 LOGIN_REDIRECT_URL = "/index"
 
 
+# 配置邮箱
+# qq IMAP/SMTP 配置
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.qq.com'
+EMAIL_PORT = 25                        # 或者 465/587是设置了 SSL 加密方式
+# 发送邮件的邮箱
+EMAIL_HOST_USER = "3342076252@qq.com"
+# 在邮箱中设置的客户端授权密码
+EMAIL_HOST_PASSWORD = "得要IMAP授权码"   # 如果重新设置了新的授权码,直接使用最新的授权码即可
+EMAIL_USE_TLS = True                   # 这里必须是 True，否则发送不成功
+# 收件人看到的发件人, 必须是一直且有效的
+EMAIL_FROM = 'Django<3342076252@qq.com>'
+
+
 if __name__ == "__main__":
     # 查看是否配置正确
     print("STATICFILES_DIR:", STATICFILES_DIRS[0])

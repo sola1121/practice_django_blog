@@ -81,7 +81,7 @@ django有内置的修改密码相关的方法, 可以拿来直接用.
 可见password_change使用的模板是registration/password_change_form.html, 使用的ModelForm表单设计PassWordChangeForm
 其向模板中传入`context={'form': form, 'title': _('Password change')}`  
 
-    def password_change_done(request,
+    password_change_done(request,
                          template_name='registration/password_change_done.html',
                          extra_context=None)
 
@@ -96,8 +96,13 @@ reverse方法用于将给定的 _namespace: name_ 形式的字符串转换为url
 ## 重置密码, 用于用户忘记密码的时候
 
 在django.contrib.auth.views中提供了一个密码重置的解决方案, 使用password_reset的一系列函数, 通过邮件来重置密码.
->向用户发送邮件 -> 显示发送是否成功      -> 使用邮箱中的url重置密码 -> 如果成功,显示成功信息
->password_reset-> password_reset_done -> password_reset_confirm-> password_reset_complete
+>向用户发送邮件 -> 显示发送是否成功      -> 使用邮箱中的url重置密码 -> 如果成功,显示成功信息  
+>password_reset-> password_reset_done -> password_reset_confirm-> password_reset_complete  
+发送邮件: password_reset_form.html,  
+邮件内容: password_reset_email.html,  
+邮件发送成功: password_reset_done.html,  
+密码被确认: password_reset_confirm.html,  
+密码重置完成: password_reset_complete.html.
 
     password_reset(request,
                    template_name='registration/password_reset_form.html',
@@ -111,11 +116,17 @@ reverse方法用于将给定的 _namespace: name_ 形式的字符串转换为url
                    html_email_template_name=None,
                    extra_email_context=None)
 
-template_name是发送邮件的表单模板.
+template_name是发送邮件的表单模板, 使用password_reset_form.html模板.
+email_template_name发送给用户的邮件内容所在模板. 一般其中有一条向password_reset_confirm模板请求的连接. 这是邮件内容的模板.password_reset_email.html
+向模板中传递`context = {'form': form, 'title': _('Password reset')`, form是在django.contrib.auth.form中的 PasswordResetForm(forms.Form)对象, 只有一个forms.EmailField字段
+subject_template_name描述路径的文件中的内容将是所发邮件的主题.
+post_reset_redirect指明跳转目标.
 
     password_reset_done(request,
                         template_name='registration/password_reset_done.html',
                         extra_context=None)
+
+template_name是完成发送使用的模板, 为password_reset_done.html
 
     password_reset_confirm(request, uidb64=None, token=None,
                            template_name='registration/password_reset_confirm.html',
@@ -123,7 +134,56 @@ template_name是发送邮件的表单模板.
                            set_password_form=SetPasswordForm,
                            post_reset_redirect=None,
                            extra_context=None)
-    
+
+uidb64是散列的用户id
+token是在连接中由password_reset中的token_generator=default_token_generator, 来自
+
+    django.contrib.auth.tokens.PasswordResetTokenGenerator(object)
+        """
+        Strategy object used to generate and check tokens for the password
+        reset mechanism.
+        """
+
     password_reset_complete(request,
                             template_name='registration/password_reset_complete.html',
                             extra_context=None)
+
+完成后请求password_reset_complete.html
+
+### 重置密码的url配置
+
+    # 密码重置相关, 4个方法 , 5个模板
+    url(r"^password-reset$", auth_views.password_reset,
+                             {"template_name": "self_account/password_reset_form.html",           # 设置重设表单模板
+                              "email_template_name": "self_account/password_reset_email.html",    # 设置email内容模板
+                              "subject_template_name": "self_account/password_reset_subject.txt", # 该文件中的内容就是邮件发送的主题
+                              "post_reset_redirect": "/account/password-reset-done"               # 这是url, 成功时重定向到下一个地址
+                             },
+                             name="password_reset"),
+    url(r"^password-reset-done$", auth_views.password_reset_done,
+                                 {"template_name":"self_account/password_reset_done.html"},   # 设置完成邮件发送时的重定向到的模板
+                                 name="password_reset_done"),
+    url(r"^password-reset-comfirm/(?P<uidb64>[-\w]+)/(?P<token>[-\w]+)/$", auth_views.password_reset_confirm,
+                                                                           {"template_name": "self_account/password_reset_confirm",     # 设置确认邮件模板
+                                                                            "post_reset_redirect": "/account/password-reset-complete"}, # 这是url, 成功后重定向地址
+                                                                            name="password_reset_confirm"),
+    url(r"^password-reset-complete$", auth_views.password_reset_complete,
+                                      {"template_name": "self_account/password_reset_complete"},   # 设置完成重置密码后使用模板
+                                      name="password_reset_complete"),
+
+### 配置邮箱
+
+在settings.py中
+
+    # 配置邮箱
+    # qq IMAP/SMTP 配置
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'smtp.qq.com'
+    EMAIL_PORT = 25                          # 或者 465/587是设置了 SSL 加密方式
+    # 发送邮件的邮箱
+    EMAIL_HOST_USER = "3342076252@qq.com"
+    # 在邮箱中设置的客户端授权密码
+    EMAIL_HOST_PASSWORD = "IMAP授权码"        # 如果重新设置了新的授权码,直接使用最新的授权码即可
+    EMAIL_USE_TLS = True                      # 这里必须是 True，否则发送不成功
+    # 收件人看到的发件人, 必须是一直且有效的
+    EMAIL_FROM = 'Tencent<3342076252@qq.com>'
