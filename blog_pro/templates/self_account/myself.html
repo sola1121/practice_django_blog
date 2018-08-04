@@ -1,0 +1,21 @@
+{% extends "basement.html" %}
+{% load static %}
+
+{% block html_title %}My Information{% endblock %}
+
+{% block html_style_link %}{% static "CSS/myself.css" %}{% endblock %}
+
+{% block html_body %}
+    <h3>My Information</h3>
+    <ul>
+        <li>用户名: {{ user.username }}</li>
+        <li>邮箱: {{ user.email }}</li>
+        <li>birth: {{ userprofile.birth }}</li>
+        <li>phone: {{ userprofile.phone }}</li>
+        <li>曾在学校: {{ userinfo.school }}</li>
+        <li>工作单位: {{ userinfo.company }}</li>
+        <li>职业: {{ userinfo.profession }}</li>
+        <li>地址: {{ userinfo.address }}</li>
+        <li>个人介绍: {{ userinfo.aboutme }}</li>
+    </ul>
+{% endblock %}

@@ -1,16 +1,18 @@
 from django import forms
 from django.contrib.auth.models import User
 
-from .models import UserProfile
+from .models import UserProfile, UserInfo
 
 class LoginForm(forms.Form):
+    """登录用的表单"""
     username = forms.CharField(label="用户名:")
     password = forms.CharField(label="用户密码:", widget=forms.PasswordInput)
 
 
 class RegistrationForm(forms.ModelForm):                                       # 使用ModelForm, 将表单直接与model关联
-    password = forms.CharField(label="用户密码:", widget=forms.PasswordInput)
-    password2 = forms.CharField(label="确认密码:", widget=forms.PasswordInput)
+    """用户更改密码的表单"""
+    password = forms.CharField(label="用户密码:", widget=forms.PasswordInput)   # 新增的表单列 
+    password2 = forms.CharField(label="确认密码:", widget=forms.PasswordInput)  # 新增的表单列
 
     class Meta:
         model = User                                                           # 本表单类所使用的数据模型, 及User数据表
@@ -24,6 +26,22 @@ class RegistrationForm(forms.ModelForm):                                       #
 
 
 class UserProfileForm(forms.ModelForm):
+    """UserProfile对应的表单"""
     class Meta:
         model = UserProfile
         fields = ("phone", "birth")
+
+
+class UserInfoForm(forms.ModelForm):
+    """UserInfo对应的表单"""
+    class Meta:
+        model = UserInfo
+        fields = ("school", "company", "profession", "address", "aboutme")
+
+
+class UserForm(forms.ModelForm):
+    """User主表对应的表单类"""
+    class Meta:
+        model = User
+        fields = ("email",)
+

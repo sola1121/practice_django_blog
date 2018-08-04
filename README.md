@@ -3,9 +3,26 @@
 1. 实现了从首页浏览所有已发博客的信息.
 2. 实现了用户的登录注册功能.
 3. 用户可以更改自己的密码.
-4. 用户忘记密码可以通过其他注册练习信息重置密码.
+4. 用户忘记密码可以通过其他注册信息重置密码.
 
 # 知识点记录
+
+## 静态文件的配置
+
+在settings.py中做了如下修改
+
+    STATIC_URL = '/static/'   # 指定url
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, "static"),   # 指定所在地址, 另外可以使用STATIC_ROOT
+    ]
+
+    # TEMPLATES 变量中
+    ...
+    'DIRS': [os.path.join(BASE_DIR, "templates")],   # 自定义模板位置
+        'APP_DIRS': False,   # 关闭以默认方式查找模板
+    ...
+
+在需要使用的模板中{% load static %}载入静态文件, 模板中使用时直接使用{% static "静态文件路径" %}即可使用static中的文件
 
 ## 使用Django内置的登录
 
@@ -150,6 +167,8 @@ token是在连接中由password_reset中的token_generator=default_token_generat
 
 完成后请求password_reset_complete.html
 
+**注意:**邮箱只能是在auth_user中有的邮箱地址, django会在发送时检验是否存在该邮箱.
+
 ### 重置密码的url配置
 
     # 密码重置相关, 4个方法 , 5个模板
@@ -190,6 +209,26 @@ token是在连接中由password_reset中的token_generator=default_token_generat
 
 ### 使用第三方库重置密码
 
-sudo pip install django-password-reset
+sudo pip install django-password-reset  
+在settings.py的应用(INSTALLED_APP)中添加"password_reset", 即添加应用, 在根中的urlpatterns中添加地址  
+第三方的应用依然遵循django的开发方式, 就是view, form, urls, templates 的集合, 以下是其urls  
 
+    urlpatterns = [
+        url(r'^recover/(?P<signature>.+)/$', views.recover_done, name='password_reset_sent'),
+        url(r'^recover/$', views.recover, name='password_reset_recover'),
+        url(r'^reset/done/$', views.reset_done, name='password_reset_done'),
+        url(r'^reset/(?P<token>[\w:-]+)/$', views.reset, name='password_reset_reset'),
+    ]
 
+## 个人信息展示
+
+    def login_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url=None):
+        """
+        Decorator for views that checks that the user is logged in, redirecting
+        to the log-in page if necessary.
+        """
+        # 用于在view中检查用户是否登录的装饰器, 在需要时可以指定重定向到log-inpage.
+
+### 编辑个人信息
+
+    

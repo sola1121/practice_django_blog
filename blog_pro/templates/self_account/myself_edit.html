@@ -1,0 +1,23 @@
+{% extends "basement.html" %}
+
+{% load static %}
+
+{% block html_title %}Edit myself information{% endblock %}
+{% block html_style_link %}{% static "CSS/myself.css" %}{% endblock %}
+
+{% block html_body %}
+<form action="." method="post">
+    <ul>
+        <li>用户名: {{ user.username }}</li>
+        <li>邮箱: {{ user_form.email }}</li>
+        <li>birth: {{ userprofile_form.birth }}</li>
+        <li>phone: {{ userprofile_form.phone }}</li>
+        <li>曾在学校: {{ userinfo_form.school }}</li>
+        <li>工作单位: {{ userinfo_form.company }}</li>
+        <li>职业: {{ userinfo_form.profession }}</li>
+        <li>地址: {{ userinfo_form.address }}</li>
+        <li>个人介绍: {{ userinfo_form.aboutme }}</li>
+    </ul>
+    <input type="submit" value="确认更改">
+</form>
+{% endblock %}

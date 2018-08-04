@@ -24,5 +24,7 @@
             {% endfor %}
         {% endcomment %}
     </form>
+    <p>forgot your password? <a href="{% url "pwd_reset:password_reset_recover" %}">reset password</a></p>
+    <p>don't have account? <a href="{% url "account:register" %}"> regist us</a></p>
     <a href="http://www.bootcss.com/">一个资源网站</a>
 {% endblock %}

@@ -49,4 +49,7 @@ urlpatterns = [
     url(r"^password-reset-complete$", auth_views.password_reset_complete, 
                                       {"template_name": "self_account/password_reset_complete"},   # 设置完成重置密码后使用模板
                                       name="password_reset_complete"),
+    
+    # 用户信息相关
+    url(r"my-information", views.myself, name="my_information"),
 ]
