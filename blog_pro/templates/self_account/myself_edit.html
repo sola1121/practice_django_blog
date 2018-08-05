@@ -7,6 +7,7 @@
 
 {% block html_body %}
 <form action="." method="post">
+    {% csrf_token %}
     <ul>
         <li>用户名: {{ user.username }}</li>
         <li>邮箱: {{ user_form.email }}</li>

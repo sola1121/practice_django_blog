@@ -5,7 +5,7 @@
 {% if request.user.is_authenticated %}
     <span style="float: right;"><a href="{% url "account:dj-logout" %}">Logout</a></span>
     <span style="float: right; margin-right: 2em;"><a href="{% url "account:change_pass" %}">Change</a></span>
-    <span style="float: right; margin-right: 2em;"><a href="#">{{ request.user.username }}</a></span>
+    <span style="float: right; margin-right: 2em;"><a href="{% url "account:my_information" %}">{{ request.user.username }}</a></span>
 {% else %}
     <span style="float:right; margin-left: 2em;"><a href="{% url "account:register" %}">注册</a></span>
     <span style="float:right;"><a href="{% url "account:login" %}">登录</a></span>

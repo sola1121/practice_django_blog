@@ -18,4 +18,5 @@
         <li>地址: {{ userinfo.address }}</li>
         <li>个人介绍: {{ userinfo.aboutme }}</li>
     </ul>
+    <a href="{% url "account:edit_my_information" %}">click here to edit my information</a> 
 {% endblock %}

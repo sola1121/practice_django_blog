@@ -227,8 +227,9 @@ sudo pip install django-password-reset
         Decorator for views that checks that the user is logged in, redirecting
         to the log-in page if necessary.
         """
-        # 用于在view中检查用户是否登录的装饰器, 在需要时可以指定重定向到log-inpage.
+        # 用于在view中检查用户是否登录的装饰器, 在需要时可以指定重定向到log-in页面.
 
 ### 编辑个人信息
 
+    使用
     

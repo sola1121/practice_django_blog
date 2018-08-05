@@ -77,12 +77,12 @@ def myself(request):
     return render(request, "self_account/myself.html", locals())
 
 
-@login_required(login_url="/account/login")
+@login_required(login_url="/account/login")   # 需要登录, 没有登录将会被重定向
 def myself_edit(request):
 # 查询对应数据库中的相应数据
     user        = User.objects.filter(username=request.user.username)
-    userprofile = UserProfile.objects.fileter(user=request.user)
-    userinfo    = UserInfo.objects.fileter(user=request.user)
+    userprofile = UserProfile.objects.filter(user=request.user)
+    userinfo    = UserInfo.objects.filter(user=request.user)
 
     if request.method == "POST":
     # 获取表单中的数据
