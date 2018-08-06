@@ -37,6 +37,9 @@ class UserInfoForm(forms.ModelForm):
     class Meta:
         model = UserInfo
         fields = ("school", "company", "profession", "address", "aboutme")
+    
+    def get(self, a):
+        return "我看看这个get是在哪调用的.%s" %a
 
 
 class UserForm(forms.ModelForm):

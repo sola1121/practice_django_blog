@@ -231,5 +231,5 @@ sudo pip install django-password-reset
 
 ### 编辑个人信息
 
-    使用
+    使用forms.ModelForm
     
