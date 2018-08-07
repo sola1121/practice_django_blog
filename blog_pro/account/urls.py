@@ -53,4 +53,7 @@ urlpatterns = [
     # 用户信息相关
     url(r"^my-information$", views.myself, name="my_information"),   # 显示信息
     url(r"^edit-my-information$", views.myself_edit, name="edit_my_information"),   # 可编辑的信息显示
+
+    # 用户上传自己的图片
+    url(r"^my-image$", views.my_image, name="my_image"),
 ]

@@ -36,7 +36,7 @@ class UserInfoForm(forms.ModelForm):
     """UserInfo对应的表单"""
     class Meta:
         model = UserInfo
-        fields = ("school", "company", "profession", "address", "aboutme")
+        fields = ("school", "company", "profession", "address", "aboutme", "photo")
     
     def get(self, a):
         return "我看看这个get是在哪调用的.%s" %a

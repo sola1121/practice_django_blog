@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 
     # 第三方库应用
     "password_reset",
-
+    
     # 添加应用
     "blog",
     "account",

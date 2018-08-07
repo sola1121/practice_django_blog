@@ -77,66 +77,25 @@ def myself(request):
     return render(request, "self_account/myself.html", locals())
 
 
-# @login_required(login_url="/account/login")   # 需要登录, 没有登录将会被重定向
-# def myself_edit(request):
-# # 查询对应数据库中的相应数据
-#     user        = User.objects.filter(username=request.user.username)
-#     userprofile = UserProfile.objects.filter(user=request.user)
-#     userinfo    = UserInfo.objects.filter(user=request.user)
-
-#     if request.method == "POST":
-#     # 获取表单中的数据
-#         user_form        = UserForm(request.POST)
-#         userprofile_form = UserProfileForm(request.POST)
-#         userinfo_form    = UserInfoForm(request.POST)
-
-#         if user_form.is_valid() and userprofile_form.is_valid() and userinfo_form.is_valid():   # 检测数据合法性
-#         # 获取干净数据
-#             user_cd        = user_form.cleaned_data                                           
-#             userprofile_cd = userprofile_form.cleaned_data
-#             userinfo_cd    = userinfo_form.cleaned_data
-#             print("form datas", user_cd["email"], )
-#         # 将新数据写入
-#             user.email        = user_cd["email"]
-#             userprofile.birth = userprofile_cd["birth"] 
-#             userprofile.phone = userprofile_cd["phone"]
-#             userinfo.school   = userinfo_cd["school"]
-#             userinfo.company  = userinfo_cd["company"] 
-#             userinfo.profession=userinfo_cd["profession"]
-#             userinfo.address  = userinfo_cd["address"]
-#             userinfo.aboutme  = userinfo_cd["aboutme"]
-#         # 存入数据库
-#             user.save()
-#             userprofile.save()
-#             userinfo.save()
-#             return HttpResponseRedirect("account/my-information")
-
-#     if request.method == "GET":
-#     # 实例化模型表单对象, 并给与对应的初值
-#         user_form        = UserForm(instance=request.user)
-#         userprofile_form = UserProfileForm(initial={"birth": userprofile.birth, 
-#                                                     "phone": userprofile.phone})
-#         userinfo_form    = UserInfoForm(UserInfoForm(initial={"school": userinfo.school, 
-#                                                              "company": userinfo.company, 
-#                                                              "profession": userinfo.profession, 
-#                                                              "address": userinfo.address, 
-#                                                              "aboutme": userinfo.aboutme}))
-#         return render(request, "self_account/myself_edit.html", locals())
-
 @login_required(login_url='/account/login/')
 def myself_edit(request):
+# 查询对应数据库中的相应数据
     user = User.objects.get(username=request.user.username) 
     userprofile = UserProfile.objects.get(user=request.user)
     userinfo = UserInfo.objects.get(user=request.user)
 
     if request.method == "POST":
+    # POST方法用于提交修改, 获取表单request.POST中的数据
         user_form = UserForm(request.POST)
         userprofile_form = UserProfileForm(request.POST)
         userinfo_form = UserInfoForm(request.POST)
+
         if user_form.is_valid() * userprofile_form.is_valid() * userinfo_form.is_valid():
+        # 获取干净数据
             user_cd = user_form.cleaned_data
             userprofile_cd = userprofile_form.cleaned_data
             userinfo_cd = userinfo_form.cleaned_data
+        # 将新数据写入
             user.email = user_cd['email']
             userprofile.birth = userprofile_cd['birth']
             userprofile.phone = userprofile_cd['phone']
@@ -145,12 +104,33 @@ def myself_edit(request):
             userinfo.profession = userinfo_cd['profession']
             userinfo.address = userinfo_cd['address']
             userinfo.aboutme = userinfo_cd['aboutme']
+        # 存入数据库
             user.save()
             userprofile.save()
             userinfo.save()
         return HttpResponseRedirect('/account/my-information/')   
     else:
+    # 实例化模型表单对象, 并给与对应的初值
         user_form = UserForm(instance=request.user)
-        userprofile_form = UserProfileForm(initial={"birth":userprofile.birth, "phone":userprofile.phone})
-        userinfo_form = UserInfoForm(initial={"school":userinfo.school, "company":userinfo.company, "profession":userinfo.profession, "address":userinfo.address, "aboutme":userinfo.aboutme})
-        return render(request, "self_account/myself_edit.html", {"user_form":user_form, "userprofile_form":userprofile_form, "userinfo_form":userinfo_form})
+        userprofile_form = UserProfileForm(
+                initial={"birth":userprofile.birth, "phone":userprofile.phone}
+            )
+        userinfo_form = UserInfoForm(
+                initial={"school":userinfo.school, "company":userinfo.company, 
+                         "profession":userinfo.profession, "address":userinfo.address, 
+                         "aboutme":userinfo.aboutme}
+            )
+        return render(request, "self_account/myself_edit.html", 
+                     {"user_form":user_form, "userprofile_form":userprofile_form, "userinfo_form":userinfo_form})
+
+
+def my_image(request):
+    """用户图片的处理视图"""
+    if request.method == "POST":
+        img = request.POST["img"]
+        userinfo= UserInfo.objects.get(user=request.user.id)
+        userinfo.photo = img
+        userinfo.save()
+        return HttpResponse("1")
+    else:
+        return render(request, "self_account/imagecrop.html")

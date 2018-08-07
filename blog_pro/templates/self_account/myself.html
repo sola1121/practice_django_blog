@@ -7,6 +7,13 @@
 
 {% block html_body %}
     <h3>My Information</h3>
+    {% if userinfo.photo %}
+        <p><img src="{{ userinfo.photo | striptags }}"></p>
+    {% else %}
+        <p><img name="user_face" src="{% static "IM/default_study.jpg" %}"></p>
+    {% endif %}
+        
+    <button id="upload_image" onclick="upload_image_layer()">upload my photo</button>
     <ul>
         <li>用户名: {{ user.username }}</li>
         <li>邮箱: {{ user.email }}</li>
@@ -19,4 +26,17 @@
         <li>个人介绍: {{ userinfo.aboutme }}</li>
     </ul>
     <a href="{% url "account:edit_my_information" %}">click here to edit my information</a> 
+
+<script type="text/javascript" src="{% static "JS/layer.js" %}"></script>
+<script type="text/javascript" src="{% static "JS/jquery-1.11.1.min.js" %}"></script>
+<script>
+    function upload_image_layer(){
+        layer.open({
+            title: "上传头像",
+            area: ["650px", "650px"],
+            type: 2,
+            content: "{% url 'account:my_image' %}",
+        })
+    }
+</script>
 {% endblock %}
