@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # 添加应用
     "blog",
     "account",
+    "article",
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,21 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block html_title %}模板页标题{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+</head>
+<body>
+    <div class="container">
+        {% include "self_article/header.html" %}
+        <div class="col-md-2">
+            {% include "self_article/leftslider.html" %}
+        </div>
+        {% block content %}
+            模板主要内容
+        {% endblock %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{% load static %}
+
+<ul>
+    <li><a href="{% url 'article:article_column' %}"></a></li>
+</ul>
+
+<ul>
+    <li><a href="{% url 'blog:index_blog' %}">首页</a></li>
+    <li><span>{{ request.user.username }}</span></li>
+    <li><a href="{% url 'article:article_column' %}">后台管理</a></li>
+    <li><a href="{% url 'account:dj-logout' %}">登出</a></li>
+</ul>

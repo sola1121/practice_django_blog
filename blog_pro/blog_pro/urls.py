@@ -19,9 +19,14 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
+    # index页
     url(r"^", include("blog.urls", namespace="blog")),
-    url(r"^account/", include("account.urls", namespace="account")),
 
+    # 用户页
+    url(r"^account/", include("account.urls", namespace="account")),
     # 密码重置的第三方应用
     url(r"^pwd_reset/", include("password_reset.urls", namespace="pwd_reset", app_name="pwd_reset")),
+
+    # 文章栏目
+    url(r"^article/", include("article.urls", namespace="article")),
 ]

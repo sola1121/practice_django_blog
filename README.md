@@ -232,4 +232,16 @@ sudo pip install django-password-reset
 ## 编辑个人信息
 
 使用forms.ModelForm表单类, 直接与models相对接. 涉及到 urls, forms, views, templates之间的配置.  
-    
+
+
+### 使用ajax技术
+
+jquery的工厂函数的方式
+
+    $.ajax({
+        url: ,// 请求的地址, 如{% url 'account:logn' %}
+        type: , // 请求的方式, 常见的POST, GET等
+        data: , // 请求的上传的数据内容, 可以指定格式如使用json, XML等方式的数据类型
+        success: , //请求成功了调用的方法, 会伴随参数
+        fail: , // 请求失败调用的方法, 会伴随参数
+    })
